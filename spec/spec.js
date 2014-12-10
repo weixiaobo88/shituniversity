@@ -44,8 +44,8 @@ describe('South Harmon Institute of Technology University', function () {
             '必修：26\n' +
             '选修：16\n' +
             '----------------------\n' +
-            '顺利毕业的所有课程平均分基线：65\n' +
-            '当前所有课程平均分：\n' +
+            '顺利毕业的所有课程平均分基线：70\n' +
+            '当前所有课程平均分：70.8\n' +
             '**********************';
 
         expect(console.log).toHaveBeenCalledWith(expectText);
