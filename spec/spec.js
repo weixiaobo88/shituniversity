@@ -37,7 +37,9 @@ describe('South Harmon Institute of Technology University', function () {
             '已折算成必修课的学分：4\n' +
             '已折算成选修课的学分：2\n' +
             '----------------------\n' +
-            '已获得的总学分：2\n' +
+            '已获得的总学分：\n' +
+            '必修：14\n' +
+            '选修：4\n' +
             '离顺利毕业还差学分：\n' +
             '必修：26\n' +
             '选修：16\n' +
