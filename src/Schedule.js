@@ -5,14 +5,11 @@ function Schedule(grades, allCourses, allPractices) {
 }
 
 Schedule.prototype.print = function () {
-
     var title = '\n***<南哈蒙理工大学>学分明细***\n';
     var ending = '**********************';
     var separator = '----------------------\n';
 
-    var courseCredits = '已修课程学分：\n' +
-                        '必修：14\n' +
-                        '选修：2\n';
+    var courseCredits = this.generateCourseCredits(this.grades, this.allCourses);
     var detail =
             title +
             separator +
@@ -33,3 +30,29 @@ Schedule.prototype.print = function () {
 
     console.log(detail);
 };
+
+Schedule.prototype.generateCourseCredits = function (grades, allCourses) {
+    var gradesWithCourseDetail = [];
+
+    grades.forEach(function(grade) {
+        allCourses.forEach(function(course) {
+            if(course.code === grade.course) {
+                var newCourse = course;
+                newCourse.score = grade.score;
+                gradesWithCourseDetail.push(newCourse);
+            }
+        })
+    });
+
+    var compulsoryCredits = 0;
+    
+    gradesWithCourseDetail.forEach(function(course) {
+        compulsoryCredits += (course.type === CourseType.COMPULSORY ? course.credit : 0);
+    });
+
+    return  '已修课程学分：\n' +
+            '必修：' + compulsoryCredits + '\n' +
+            '选修：2\n'
+};
+
+
