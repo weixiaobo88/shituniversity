@@ -40,7 +40,7 @@ describe('South Harmon Institute of Technology University', function () {
             '已获得的总学分：2\n' +
             '离顺利毕业还差学分：\n' +
             '必修：26\n' +
-            '选修：20\n' +
+            '选修：16\n' +
             '----------------------\n' +
             '顺利毕业的所有课程平均分基线：65\n' +
             '当前所有课程平均分：\n' +
