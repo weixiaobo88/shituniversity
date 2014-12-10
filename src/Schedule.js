@@ -10,14 +10,13 @@ Schedule.prototype.print = function () {
     var separator = '----------------------\n';
 
     var courseCredits = this.generateCourseCredits(this.grades, this.allCourses);
+    var practiceCredits = this.generatePracticeCredits(this.grades, this.allPractices);
     var detail =
             title +
             separator +
             courseCredits +
             separator +
-            '社会实践：\n' +     //如果没参加，显示的是：需要参加社会实践
-            '已折算成必修课的学分：4\n' +
-            '已折算成选修课的学分：2\n' +
+            practiceCredits +
             separator +
             '已获得的总学分：2\n' +
             '离顺利毕业还差学分：\n' +
@@ -45,5 +44,16 @@ Schedule.prototype.generateCourseCredits = function (grades, allCourses) {
             '必修：' + compulsoryCredits + '\n' +
             '选修：' + electiveCredits + '\n'
 };
+
+Schedule.prototype.generatePracticeCredits = function (grades, allPractices) {
+    if(allPractices.length === 0) {
+        return '需要参加社会实践\n';
+    }
+
+    return  '社会实践：\n' +
+            '已折算成必修课的学分：4\n' +
+            '已折算成选修课的学分：2\n'
+};
+
 
 
