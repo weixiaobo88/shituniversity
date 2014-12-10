@@ -23,8 +23,8 @@ describe('South Harmon Institute of Technology University', function () {
 
         spyOn(console, 'log');
 
-        var schedule = new Schedule(grades, allCourses, allPractices);
-        schedule.print(grades, allCourses, allPractices);
+        var schedule = new ScheduleFactory(grades, allCourses, allPractices).create();
+        schedule.print();
 
         var expectText =
             '\n***<南哈蒙理工大学>学分明细***\n' +
