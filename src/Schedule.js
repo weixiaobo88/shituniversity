@@ -45,14 +45,15 @@ Schedule.prototype.generateCourseCredits = function (grades, allCourses) {
     });
 
     var compulsoryCredits = 0;
-    
+    var electiveCredits = 0;
     gradesWithCourseDetail.forEach(function(course) {
         compulsoryCredits += (course.type === CourseType.COMPULSORY ? course.credit : 0);
+        electiveCredits += (course.type === CourseType.ELECTIVE ? course.credit : 0);
     });
 
     return  '已修课程学分：\n' +
             '必修：' + compulsoryCredits + '\n' +
-            '选修：2\n'
+            '选修：' + electiveCredits + '\n'
 };
 
 
