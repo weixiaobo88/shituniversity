@@ -9,9 +9,9 @@ ScheduleFactory.prototype.create = function() {
     var practiceCredits = this.generatePracticeCredits(this.grades, this.allPractices, this.allCourses);
     var achievedCredits = this.generateAchievedCredits(courseCredits, practiceCredits);
     var leftCredits = this.generateLeftCredits(achievedCredits);
-    var averageScore = 80;
+    var average = this.generateAverage();
 
-    var schedule = new Schedule(courseCredits, practiceCredits, achievedCredits, leftCredits, averageScore);
+    var schedule = new Schedule(courseCredits, practiceCredits, achievedCredits, leftCredits, average);
 
     return schedule;
 };
@@ -40,8 +40,12 @@ ScheduleFactory.prototype.generatePracticeCredits = function (grades, allPractic
 
 //    有实践也修了相关课程的，分数高者有效
 //    有实践没有修相关课程的，替换为相应课程
-    var gradesReplacedWithDetail = this.replace(replaceablePracticeDetail, gradesOfCourseCode, allCourses).gradesReplacedWithDetail;
-    var gradesIncreasedWithDetail = this.replace(replaceablePracticeDetail, gradesOfCourseCode, allCourses).gradesIncreasedWithDetail;
+    var infoAfterReplace = this.replace(replaceablePracticeDetail, gradesOfCourseCode, allCourses);
+
+    var gradesReplacedWithDetail = infoAfterReplace.gradesReplacedWithDetail;
+    var gradesIncreasedWithDetail = infoAfterReplace.gradesIncreasedWithDetail;
+
+    this.gradesAfterReplacementDetail = infoAfterReplace.gradesAfterReplacementDetail;
 
     var replacedCompulsoryCredits = 0;
     var electiveCredits = 0;
@@ -130,5 +134,18 @@ ScheduleFactory.prototype.generateLeftCredits = function (achievedCredits) {
     return {
         compulsory: Baseline.COMPULSORY - achievedCredits.compulsory,
         elective: Baseline.ELECTIVE - achievedCredits.elective
+    };
+};
+
+ScheduleFactory.prototype.generateAverage = function () {
+    var sum = 0;
+    var length = this.gradesAfterReplacementDetail.length;
+    this.gradesAfterReplacementDetail.forEach(function(grade) {
+        sum += grade.score;
+    });
+
+    return {
+        baseline: Baseline.AVERAGE,
+        currentCourseAverage: (sum / length).toFixed(1)
     };
 };

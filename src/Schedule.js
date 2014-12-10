@@ -1,9 +1,9 @@
-function Schedule(courseCredits, practiceCredits, achievedCredits, leftCredits, averageScore) {
+function Schedule(courseCredits, practiceCredits, achievedCredits, leftCredits, average) {
     this.courseCredits = courseCredits;
     this.practiceCredits = practiceCredits;
     this.achievedCredits = achievedCredits;
     this.leftCredits = leftCredits;
-    this.averageScore = averageScore;
+    this.average = average;
 }
 
 Schedule.prototype.print = function () {
@@ -27,6 +27,10 @@ Schedule.prototype.print = function () {
     var achievedCredits =   '已获得的总学分：\n' +
                             '必修：' + this.achievedCredits.compulsory + '\n' +
                             '选修：' + this.achievedCredits.elective + '\n';
+
+    var average =  '顺利毕业的所有课程平均分基线：' + this.average.baseline + '\n' +
+                    '当前所有课程平均分：' + this.average.currentCourseAverage + '\n';
+
     var detail =
         title +
         separator +
@@ -37,8 +41,7 @@ Schedule.prototype.print = function () {
         achievedCredits +
         leftCredits +
         separator +
-        '顺利毕业的所有课程平均分基线：65\n' +
-        '当前所有课程平均分：\n' +
+        average +
         ending;
 
     console.log(detail);
