@@ -12,8 +12,8 @@ var fixtures = (function() {
 
     var loadAllSocialPractices = function loadAllSocialPractices() {
         return [
-            new Practice('PRACTICE-Java开发实践', 'COURSE000005', 80),
-            new Practice('PRACTICE-IOS开发实践', 'COURSE000006', 80),
+            new Practice('PRACTICE-Java开发实践', 'COURSE000005', 60),
+            new Practice('PRACTICE-IOS开发实践', 'COURSE000006', 60),
             new Practice('PRACTICE-暑期三下乡实践', '', 60)
         ]
     };
