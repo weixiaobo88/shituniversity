@@ -7,10 +7,7 @@ function ScheduleFactory(grades, allCourses, allPractices) {
 ScheduleFactory.prototype.create = function() {
     var courseCredits = this.generateCourseCredits(this.grades, this.allCourses);
     var practiceCredits = this.generatePracticeCredits(this.grades, this.allPractices, this.allCourses);
-    var leftCredits = {
-        compulsory: 26,
-        elective: 20
-    };
+    var leftCredits = this.generateLeftCredits(courseCredits, practiceCredits);
     var averageScore = 80;
 
     var schedule = new Schedule(courseCredits, practiceCredits, leftCredits, averageScore);
@@ -117,3 +114,14 @@ ScheduleFactory.prototype.replace = function (replaceablePracticeDetail, gradesO
     };
 };
 
+ScheduleFactory.prototype.generateLeftCredits = function (courseCredits, practiceCredits) {
+    var achievedCredits = {
+        compulsory: courseCredits.compulsory,
+        elective: courseCredits.elective + practiceCredits.elective
+    };
+
+    return {
+        compulsory: Baseline.COMPULSORY - achievedCredits.compulsory,
+        elective: Baseline.ELECTIVE - achievedCredits.elective
+    };
+}

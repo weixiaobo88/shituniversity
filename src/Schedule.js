@@ -20,6 +20,9 @@ Schedule.prototype.print = function () {
                                         '已折算成选修课的学分：' + this.practiceCredits.elective + '\n';
     }
 
+    var leftCredits =   '离顺利毕业还差学分：\n' +
+                        '必修：' + this.leftCredits.compulsory + '\n' +
+                        '选修：' + this.leftCredits.elective + '\n';
     var detail =
         title +
         separator +
@@ -28,9 +31,7 @@ Schedule.prototype.print = function () {
         practiceCreditsDescription +
         separator +
         '已获得的总学分：2\n' +
-        '离顺利毕业还差学分：\n' +
-        '必修：26\n' +
-        '选修：20\n' +
+        leftCredits +
         separator +
         '顺利毕业的所有课程平均分基线：65\n' +
         '当前所有课程平均分：\n' +
