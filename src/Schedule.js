@@ -10,12 +10,13 @@ Schedule.prototype.print = function () {
     var ending = '**********************';
     var separator = '----------------------\n';
 
+    var courseCredits = '已修课程学分：\n' +
+                        '必修：14\n' +
+                        '选修：2\n';
     var detail =
             title +
             separator +
-            '已修课程学分：\n' +
-            '必修：14\n' +
-            '选修：2\n' +
+            courseCredits +
             separator +
             '社会实践：\n' +     //如果没参加，显示的是：需要参加社会实践
             '已折算成必修课的学分：4\n' +
