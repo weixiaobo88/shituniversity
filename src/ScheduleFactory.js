@@ -68,8 +68,6 @@ ScheduleFactory.prototype.replace = function (replaceablePracticeDetail, gradesO
     var gradesAfterReplacement = gradesOfCourseCode;
     var gradesReplaced = [];
     var gradesCantReplace = replaceablePracticeDetail;
-    console.log(replaceablePracticeDetail)
-    console.log(gradesOfCourseCode)
 
     replaceablePracticeDetail.forEach(function(practice, practiceIndex) {
         gradesOfCourseCode.forEach(function(grade, gradeIndex) {
@@ -88,10 +86,6 @@ ScheduleFactory.prototype.replace = function (replaceablePracticeDetail, gradesO
             }
         });
     });
-
-    console.log(gradesAfterReplacement)
-    console.log(gradesReplaced)
-    console.log(gradesCantReplace)
 
     var gradesReplacedWithDetail = [];
     gradesReplaced.forEach(function(grade) {

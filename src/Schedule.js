@@ -1,59 +1,40 @@
-function Schedule(grades, allCourses, allPractices) {
-    this.grades = grades;
-    this.allCourses = allCourses;
-    this.allPractices = allPractices;
+function Schedule(courseCredits, practiceCredits, leftCredits, averageScore) {
+    this.courseCredits = courseCredits;
+    this.practiceCredits = practiceCredits;
+    this.leftCredits = leftCredits;
+    this.averageScore = averageScore;
 }
 
 Schedule.prototype.print = function () {
     var title = '\n***<南哈蒙理工大学>学分明细***\n';
     var ending = '**********************';
     var separator = '----------------------\n';
+    var courseCreditsDescription =  '已修课程学分：\n' +
+                                    '必修：' + this.courseCredits.compulsory + '\n' +
+                                    '选修：' + this.courseCredits.elective + '\n';
 
-    var courseCredits = this.generateCourseCredits(this.grades, this.allCourses);
-    var practiceCredits = this.generatePracticeCredits(this.grades, this.allPractices);
+    var practiceCreditsDescription = '需要参加社会实践\n';
+    if(this.practiceCredits != undefined) {
+        practiceCreditsDescription =    '社会实践：\n' +
+                                        '已折算成必修课的学分：' + this.practiceCredits.compulsory + '\n' +
+                                        '已折算成选修课的学分：' + this.practiceCredits.elective + '\n';
+    }
+
     var detail =
-            title +
-            separator +
-            courseCredits +
-            separator +
-            practiceCredits +
-            separator +
-            '已获得的总学分：2\n' +
-            '离顺利毕业还差学分：\n' +
-            '必修：26\n' +
-            '选修：20\n' +
-            separator +
-            '顺利毕业的所有课程平均分基线：65\n' +
-            '当前所有课程平均分：\n' +
-            ending;
+        title +
+        separator +
+        courseCreditsDescription +
+        separator +
+        practiceCreditsDescription +
+        separator +
+        '已获得的总学分：2\n' +
+        '离顺利毕业还差学分：\n' +
+        '必修：26\n' +
+        '选修：20\n' +
+        separator +
+        '顺利毕业的所有课程平均分基线：65\n' +
+        '当前所有课程平均分：\n' +
+        ending;
 
     console.log(detail);
 };
-
-Schedule.prototype.generateCourseCredits = function (grades, allCourses) {
-    var gradesWithCourseDetail = Feature.assignCourseDetailForGrades(grades, allCourses);
-
-    var compulsoryCredits = 0;
-    var electiveCredits = 0;
-    gradesWithCourseDetail.forEach(function(course) {
-        compulsoryCredits += (course.type === CourseType.COMPULSORY ? course.credit : 0);
-        electiveCredits += (course.type === CourseType.ELECTIVE ? course.credit : 0);
-    });
-
-    return  '已修课程学分：\n' +
-            '必修：' + compulsoryCredits + '\n' +
-            '选修：' + electiveCredits + '\n'
-};
-
-Schedule.prototype.generatePracticeCredits = function (grades, allPractices) {
-    if(allPractices.length === 0) {
-        return '需要参加社会实践\n';
-    }
-
-    return  '社会实践：\n' +
-            '已折算成必修课的学分：4\n' +
-            '已折算成选修课的学分：2\n'
-};
-
-
-
