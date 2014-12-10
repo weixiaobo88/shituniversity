@@ -29,7 +29,7 @@ describe('South Harmon Institute of Technology University', function () {
         var expectText =
             '\n***<南哈蒙理工大学>学分明细***\n' +
             '----------------------\n' +
-            '已修课程学分（不）：\n' +
+            '已修课程学分：\n' +
             '必修：14\n' +
             '选修：2\n' +
             '----------------------\n' +

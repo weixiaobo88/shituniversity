@@ -13,7 +13,7 @@ Schedule.prototype.print = function () {
     var detail =
             title +
             separator +
-            '已修课程学分（不）：\n' +
+            '已修课程学分：\n' +
             '必修：14\n' +
             '选修：2\n' +
             separator +
