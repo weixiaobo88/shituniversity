@@ -11,7 +11,7 @@ describe('South Harmon Institute of Technology University', function () {
             new Grade('COURSE000002', 70),
             new Grade('COURSE000003', 55),
             new Grade('COURSE000004', 60),
-            new Grade('COURSE000005', 70),
+            new Grade('COURSE000005', 60),
             new Grade('PRACTICE-Java开发实践', 70),
             new Grade('PRACTICE-暑期三下乡实践', 80),
             new Grade('PRACTICE-IOS开发实践', 80)
