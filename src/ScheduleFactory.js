@@ -45,6 +45,7 @@ ScheduleFactory.prototype.generatePracticeCredits = function (grades, allPractic
     var gradesReplacedWithDetail = infoAfterReplace.gradesReplacedWithDetail;
     var gradesIncreasedWithDetail = infoAfterReplace.gradesIncreasedWithDetail;
 
+//该如何修改，这里使用this来存储变量
     this.gradesAfterReplacementDetail = infoAfterReplace.gradesAfterReplacementDetail;
 
     var replacedCompulsoryCredits = 0;
