@@ -7,14 +7,14 @@ describe('South Harmon Institute of Technology University', function () {
         allPractices = fixtures.loadAllSocialPractices();
 
         grades = [
-            new Grade('COURSE000001', 90),
-            new Grade('COURSE000002', 70),
-            new Grade('COURSE000003', 55),
-            new Grade('COURSE000004', 60),
-            new Grade('COURSE000005', 60),
-            new Grade('PRACTICE-Java开发实践', 70),
-            new Grade('PRACTICE-暑期三下乡实践', 80),
-            new Grade('PRACTICE-IOS开发实践', 80)
+            'COURSE000001: 90',
+            'COURSE000002: 70',
+            'COURSE000003: 55',
+            'COURSE000004: 60',
+            'COURSE000005: 60',
+            'PRACTICE-Java开发实践: 70',
+            'PRACTICE-暑期三下乡实践: 80',
+            'PRACTICE-IOS开发实践: 80'
         ];
 
     });
