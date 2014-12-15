@@ -6,7 +6,7 @@ function Schedule(courseCredits, practiceCredits, achievedCredits, leftCredits, 
     this.average = average;
 }
 
-Schedule.prototype.print = function () {
+Schedule.prototype.concact = function () {
     var title = '\n***<南哈蒙理工大学>学分明细***\n';
     var ending = '**********************';
     var separator = '----------------------\n';
@@ -44,5 +44,10 @@ Schedule.prototype.print = function () {
         average +
         ending;
 
-    console.log(detail);
+    return detail;
+};
+
+Schedule.prototype.render = function (printer) {
+//    console.log(this.concact());
+    printer.log(this.concact());
 };
