@@ -19,34 +19,45 @@ var Feature = {
             gradesOfCourseDetail: gradesOfCourseDetail
         }
     },
-    gradesOfPractice: function(grades, allPractices) {
-        var gradesOfPracticeName = [];
-        var gradesOfPracticeDetail = [];
+    extractMyPractices: function(grades, allPractices) {
+        var myPracticesScore = [];
+        var myPractices = [];
 
         grades.forEach(function (grade) {
             allPractices.forEach(function (practice) {
                 if (practice.name === grade.course) {
-                    gradesOfPracticeName.push(grade);
+                    myPracticesScore.push(grade);
                     var newCourse = practice;
                     newCourse.score = grade.score;
-                    gradesOfPracticeDetail.push(newCourse);
+                    myPractices.push(newCourse);
                 }
             })
         });
 
         return {
-            gradesOfPracticeName: gradesOfPracticeName,
-            gradesOfPracticeDetail: gradesOfPracticeDetail
+            myPracticesScore: myPracticesScore,
+            myPractices: myPractices
         }
     },
-    removeUnreplaceablePractice: function(gradesWithPracticeDetail) {
+    qualifiedGrades: function(grades) {
+        var qualifiedGrades = [];
+        grades.forEach(function(grade) {
+            if(grade.score > 60) {
+                qualifiedGrades.push(grade);
+            }
+        });
+
+        return qualifiedGrades;
+    },
+    removeUnreplaceablePractices: function(gradesWithPracticeDetail) {
         var gradesWithPracticeDetailOfAllReplaceable = gradesWithPracticeDetail;
 
         gradesWithPracticeDetailOfAllReplaceable.forEach(function(grade, index) {
-            if(grade.replaceableCourses.length === 0) {
+            if(!grade.replaceableCourses) {
                 gradesWithPracticeDetailOfAllReplaceable.splice(index, 1);
             }
         });
+
         return gradesWithPracticeDetailOfAllReplaceable;
     }
 };

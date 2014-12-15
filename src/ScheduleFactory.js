@@ -4,9 +4,9 @@ function ScheduleFactory(grades, allCourses, allPractices) {
     this.allPractices =  allPractices;
 }
 
-ScheduleFactory.prototype.create = function() {
+ScheduleFactory.prototype.create = function(replacementStrategy) {
     var courseCredits = this.generateCourseCredits(this.grades, this.allCourses);
-    var practiceCredits = this.generatePracticeCredits(this.grades, this.allPractices, this.allCourses);
+    var practiceCredits = this.generatePracticeCredits(this.grades, this.allPractices, this.allCourses, replacementStrategy);
     var achievedCredits = this.generateAchievedCredits(courseCredits, practiceCredits);
     var leftCredits = this.generateLeftCredits(achievedCredits);
     var average = this.generateAverage();
@@ -32,30 +32,33 @@ ScheduleFactory.prototype.generateCourseCredits = function (grades, allCourses) 
     };
 };
 
-ScheduleFactory.prototype.generatePracticeCredits = function (grades, allPractices, allCourses) {
-    var gradesWithPracticeDetail = Feature.gradesOfPractice(grades, allPractices).gradesOfPracticeDetail;
-    var gradesOfCourseCode = Feature.gradesOfCourse(grades, allCourses).gradesOfCourseCode;
+ScheduleFactory.prototype.generatePracticeCredits = function (grades, allPractices, allCourses, replacementStrategy) {
+    var myPractices = Feature.extractMyPractices(grades, allPractices).myPractices;
 
-    var replaceablePracticeDetail = Feature.removeUnreplaceablePractice(gradesWithPracticeDetail);
+    var qualifiedPractices = Feature.qualifiedGrades(myPractices);
+
+    var replaceablePractices = Feature.removeUnreplaceablePractices(qualifiedPractices);
+
+    var gradesOfCourseCode = Feature.gradesOfCourse(grades, allCourses).gradesOfCourseCode;
 
 //    有实践也修了相关课程的，分数高者有效
 //    有实践没有修相关课程的，替换为相应课程
-    var infoAfterReplace = this.replace(replaceablePracticeDetail, gradesOfCourseCode, allCourses);
+    var infoAfterReplace = this.replace(replaceablePractices, gradesOfCourseCode, replacementStrategy);
 
-    var gradesReplacedWithDetail = infoAfterReplace.gradesReplacedWithDetail;
-    var gradesIncreasedWithDetail = infoAfterReplace.gradesIncreasedWithDetail;
-
-//该如何修改，这里使用this来存储变量
-    this.gradesAfterReplacementDetail = infoAfterReplace.gradesAfterReplacementDetail;
+    var myReplacedCoursesByReplaceablePractices = infoAfterReplace.myReplacedCoursesByReplaceablePractices;
+    var myIncreasedCoursesByReplaceablePractices = infoAfterReplace.myIncreasedCoursesByReplaceablePractices;
+    //该如何修改，这里使用this来存储变量
+    this.gradesAfterReplacement = infoAfterReplace.gradesAfterReplacement;
 
     var replacedCompulsoryCredits = 0;
     var electiveCredits = 0;
-    gradesReplacedWithDetail.forEach(function(course) {
+
+    myReplacedCoursesByReplaceablePractices.forEach(function(course) {
         replacedCompulsoryCredits += (course.type === CourseType.COMPULSORY ? course.credit : 0);
         electiveCredits += (course.type === CourseType.ELECTIVE ? course.credit : 0);
     });
 
-    gradesIncreasedWithDetail.forEach(function(course) {
+    myIncreasedCoursesByReplaceablePractices.forEach(function(course) {
         replacedCompulsoryCredits += (course.type === CourseType.COMPULSORY ? course.credit : 0);
         electiveCredits += (course.type === CourseType.ELECTIVE ? course.credit : 0);
     });
@@ -63,60 +66,31 @@ ScheduleFactory.prototype.generatePracticeCredits = function (grades, allPractic
     return  {
         compulsory: replacedCompulsoryCredits,
         elective: electiveCredits
-    }
+    };
 };
 
-ScheduleFactory.prototype.replace = function (replaceablePracticeDetail, gradesOfCourseCode, allCourses) {
-    var highScore = 0;
-    var gradesAfterReplacement = gradesOfCourseCode;
-    var gradesReplaced = [];
-    var gradesCantReplace = replaceablePracticeDetail;
+ScheduleFactory.prototype.replace = function (replaceablePractices, gradesOfCourseCode, replacementStrategy) {
+    var replacement = replacementStrategy(replaceablePractices, gradesOfCourseCode);
 
-    replaceablePracticeDetail.forEach(function(practice, practiceIndex) {
-        gradesOfCourseCode.forEach(function(grade, gradeIndex) {
-            if(practice.replaceableCourses === grade.course) {
+    var gradesAfterReplacement = replacement.gradesAfterReplacement;
+    var myReplacedCoursesByReplaceablePractices = replacement.myReplacedCoursesByReplaceablePractices;
+    var practicesCantReplace = replacement.practicesCantReplace;
 
-                var practiceScore = practice.score;
-                var courseScore = grade.score;
-                //    highScorePriority
-                if(practiceScore > 60 && practiceScore > courseScore) {
-                    highScore = practiceScore;
-                    gradesReplaced.push(grade);
-                    gradesAfterReplacement[gradeIndex].score = highScore;
+    var myIncreasedCoursesByReplaceablePractices = [];
 
-                    gradesCantReplace.splice(practiceIndex, 1);
-                }
-            }
-        });
+    practicesCantReplace.forEach(function(practice) {
+        var newCourse = practice.replaceableCourses;
+        newCourse.score = practice.score;
+        myIncreasedCoursesByReplaceablePractices.push(newCourse);
+        gradesAfterReplacement.push(new Grade(newCourse, newCourse.score));
     });
-
-    var gradesReplacedWithDetail = [];
-    gradesReplaced.forEach(function(grade) {
-        allCourses.forEach(function(course) {
-            if(grade.course === course.code) {
-                var courseDetail = course;
-                courseDetail.score = grade.score;
-                gradesReplacedWithDetail.push(courseDetail);
-            }
-        })
-    });
-
-    var gradesIncreased = [];
-    gradesCantReplace.forEach(function(grade) {
-        var newGrade = new Grade(grade.replaceableCourses, grade.score);
-        gradesIncreased.push(newGrade);
-        gradesAfterReplacement.push(newGrade);
-    });
-
-    var gradesAfterReplacementDetail = Feature.gradesOfCourse(gradesAfterReplacement, allCourses).gradesOfCourseDetail;
-    var gradesIncreasedWithDetail = Feature.gradesOfCourse(gradesIncreased, allCourses).gradesOfCourseDetail;
 
 
     return {
         gradesAfterReplacement: gradesAfterReplacement,
-        gradesIncreasedWithDetail: gradesIncreasedWithDetail,
-        gradesAfterReplacementDetail: gradesAfterReplacementDetail,
-        gradesReplacedWithDetail: gradesReplacedWithDetail
+        myReplacedCoursesByReplaceablePractices: myReplacedCoursesByReplaceablePractices,
+        practicesCantReplace: practicesCantReplace,
+        myIncreasedCoursesByReplaceablePractices: myIncreasedCoursesByReplaceablePractices
     };
 };
 
@@ -140,8 +114,9 @@ ScheduleFactory.prototype.generateLeftCredits = function (achievedCredits) {
 
 ScheduleFactory.prototype.generateAverage = function () {
     var sum = 0;
-    var length = this.gradesAfterReplacementDetail.length;
-    this.gradesAfterReplacementDetail.forEach(function(grade) {
+
+    var length = this.gradesAfterReplacement.length;
+    this.gradesAfterReplacement.forEach(function(grade) {
         sum += grade.score;
     });
 
