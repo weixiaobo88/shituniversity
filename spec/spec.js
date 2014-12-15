@@ -22,9 +22,10 @@ describe('South Harmon Institute of Technology University', function () {
     it('should print correct text', function() {
 
         spyOn(console, 'log');
+        var legalFormattedGrades = Feature.transformData(grades);
 
-        var schedule = new ScheduleFactory(grades, allCourses, allPractices).create();
         schedule.print();
+        var schedule = new ScheduleFactory(legalFormattedGrades, allCourses, allPractices).create(ReplacementStrategy.scorePriority);
 
         var expectText =
             '\n***<南哈蒙理工大学>学分明细***\n' +

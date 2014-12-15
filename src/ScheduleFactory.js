@@ -1,20 +1,8 @@
 function ScheduleFactory(grades, allCourses, allPractices) {
-    this.grades = this.dataTransform(grades);
+    this.grades = grades;
     this.allCourses = allCourses;
     this.allPractices =  allPractices;
 }
-
-ScheduleFactory.prototype.dataTransform = function(grades) {
-    var gradesObj = [];
-    
-    grades.forEach(function(grade) {
-        var course = grade.split(':')[0];
-        var score = parseInt(grade.split(':')[1]);
-        gradesObj.push(new Grade(course, score))
-    });
-
-    return gradesObj;
-};
 
 ScheduleFactory.prototype.create = function() {
     var courseCredits = this.generateCourseCredits(this.grades, this.allCourses);
