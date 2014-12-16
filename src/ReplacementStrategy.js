@@ -2,8 +2,8 @@ var ReplacementStrategy = {
     sequencePriority: function(replaceablePractices, gradesOfCourseCode) {
 
     },
-    scorePriority: function(replaceablePractices, gradesOfCourseCode) {
-        var gradesAfterReplacement = gradesOfCourseCode;
+    scorePriority: function(replaceablePractices, myCourses) {
+        var myCoursesAfterReplace = myCourses;
         var myReplacedCourses = [];
         var practicesCantReplace = replaceablePractices;
 
@@ -17,9 +17,9 @@ var ReplacementStrategy = {
                     newCourse.score = practiceScore;
                     myReplacedCourses.push(newCourse);
 
-                    gradesAfterReplacement.forEach(function(grade) {
-                        if(grade.course === practice.replaceableCourses.code) {
-                            grade.score = practiceScore;
+                    myCoursesAfterReplace.forEach(function(course) {
+                        if(course.code === practice.replaceableCourses.code) {
+                            course.score = practiceScore;
                         }
                     });
 
@@ -29,7 +29,7 @@ var ReplacementStrategy = {
         });
 
         return {
-            gradesAfterReplacement: gradesAfterReplacement,
+            myCoursesAfterReplace: myCoursesAfterReplace,
             myReplacedCoursesByReplaceablePractices: myReplacedCourses,
             practicesCantReplace: practicesCantReplace
         }

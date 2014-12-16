@@ -10,9 +10,9 @@ var Feature = {
 
         return gradesObj;
     },
-    gradesOfCourse: function(grades, allCourses) {
+    getMyGradesOfCourse: function(grades, allCourses) {
         var gradesOfCourseCode = [];
-        var gradesOfCourseDetail = [];
+        var myCourses = [];
 
         grades.forEach(function (grade) {
             allCourses.forEach(function (course) {
@@ -20,14 +20,14 @@ var Feature = {
                     gradesOfCourseCode.push(grade);
                     var newCourse = course;
                     newCourse.score = grade.score;
-                    gradesOfCourseDetail.push(newCourse);
+                    myCourses.push(newCourse);
                 }
             })
         });
 
         return {
             gradesOfCourseCode: gradesOfCourseCode,
-            gradesOfCourseDetail: gradesOfCourseDetail
+            myCourses: myCourses
         }
     },
     extractMyPractices: function(grades, allPractices) {
