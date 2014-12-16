@@ -16,7 +16,6 @@ describe('South Harmon Institute of Technology University', function () {
             'PRACTICE-暑期三下乡实践: 80',
             'PRACTICE-IOS开发实践: 80'
         ];
-
     });
 
     it('should print correct text', function() {
