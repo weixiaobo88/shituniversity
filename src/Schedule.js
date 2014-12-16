@@ -48,6 +48,5 @@ Schedule.prototype.concat = function () {
 };
 
 Schedule.prototype.render = function (printer) {
-//    console.log(this.concact());
-    printer.log(this.concact());
+    printer(this.concat());
 };

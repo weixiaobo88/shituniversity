@@ -24,8 +24,7 @@ describe('South Harmon Institute of Technology University', function () {
         var legalFormattedGrades = Feature.transformData(grades);
 
         var schedule = new ScheduleFactory(legalFormattedGrades, allCourses, allPractices).create(ReplacementStrategy.scorePriority);
-        var printer = console;
-        schedule.render(printer);
+        schedule.render(Printer.consolePrinter);
 
         var expectText =
             '\n***<南哈蒙理工大学>学分明细***\n' +
