@@ -1,11 +1,12 @@
 var ReplacementStrategy = {
-    sequencePriority: function(replaceablePractices, gradesOfCourseCode) {
+    sequencePriority: function(replaceablePractices, myCoursesBeforeReplace) {
 
     },
-    scorePriority: function(replaceablePractices, myCourses) {
-        var myCoursesAfterReplace = myCourses;
+
+    scorePriority: function(replaceablePractices, myCoursesBeforeReplace) {
+        var myCoursesAfterReplace = myCoursesBeforeReplace;
         var myReplacedCourses = [];
-        var practicesCantReplace = replaceablePractices;
+        var myPracticesCantReplace = replaceablePractices;
 
         replaceablePractices.forEach(function(practice, practiceIndex) {
             var practiceScore = practice.score;
@@ -23,7 +24,7 @@ var ReplacementStrategy = {
                         }
                     });
 
-                    practicesCantReplace.splice(practiceIndex, 1);
+                    myPracticesCantReplace.splice(practiceIndex, 1);
                 }
             }
         });
@@ -31,7 +32,7 @@ var ReplacementStrategy = {
         return {
             myCoursesAfterReplace: myCoursesAfterReplace,
             myReplacedCoursesByReplaceablePractices: myReplacedCourses,
-            practicesCantReplace: practicesCantReplace
+            practicesCantReplace: myPracticesCantReplace
         }
     }
 };
