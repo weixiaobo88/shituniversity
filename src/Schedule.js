@@ -6,10 +6,6 @@ function Schedule(courseCredits, practiceCredits, achievedCredits, leftCredits, 
     this.average = average;
 }
 
-Schedule.prototype.display = function(displayStrategy) {
-    return displayStrategy(this);
-};
-
 Schedule.prototype.concat = function () {
     var title = '\n***<南哈蒙理工大学>学分明细***\n';
     var ending = '**********************';
