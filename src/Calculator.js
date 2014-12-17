@@ -1,9 +1,9 @@
 var Calculator = {
-    calculateCourseCredits: function (myCourses, myGradesAfterReplace) {
+    calculateCourseCredits: function (myCourses, myGradesAfterReplace, gradeRules) {
         var myIncreasedCoursesByReplaceablePractices = myGradesAfterReplace.myIncreasedCoursesByReplaceablePractices;
 
-        var originalCourseCredits = Feature.calculateCredits(myCourses);
-        var increasedCredits = Feature.calculateCredits(myIncreasedCoursesByReplaceablePractices);
+        var originalCourseCredits = gradeRules.calculateCredits(myCourses);
+        var increasedCredits = gradeRules.calculateCredits(myIncreasedCoursesByReplaceablePractices);
 
         var combinedCredits = {
             compulsory: originalCourseCredits.compulsory + increasedCredits.compulsory,
@@ -15,12 +15,12 @@ var Calculator = {
             originalCourseCredits: originalCourseCredits
         };
     },
-    calculatePracticeCredits: function (myGradesAfterReplace) {
+    calculatePracticeCredits: function (myGradesAfterReplace, gradeRules) {
         var myReplacedCoursesByReplaceablePractices = myGradesAfterReplace.myReplacedCoursesByReplaceablePractices;
         var myIncreasedCoursesByReplaceablePractices = myGradesAfterReplace.myIncreasedCoursesByReplaceablePractices;
 
-        var replacedCredits = Feature.calculateCredits(myReplacedCoursesByReplaceablePractices);
-        var increasedCredits = Feature.calculateCredits(myIncreasedCoursesByReplaceablePractices);
+        var replacedCredits = gradeRules.calculateCredits(myReplacedCoursesByReplaceablePractices);
+        var increasedCredits = gradeRules.calculateCredits(myIncreasedCoursesByReplaceablePractices);
 
         var combinedCredits = {
             compulsory: replacedCredits.compulsory + increasedCredits.compulsory,

@@ -7,9 +7,9 @@ DisplayWithPracticeNotAddedInCompletedCourse.prototype = Object.create(DisplaySt
 DisplayWithPracticeNotAddedInCompletedCourse.prototype.constructor = DisplayStrategy;
 DisplayWithPracticeNotAddedInCompletedCourse.prototype.parent = DisplayStrategy.prototype;
 
-DisplayWithPracticeNotAddedInCompletedCourse.prototype.calculate = function(myCourses, myGradesAfterReplace) {
-    var courseCredits = Calculator.calculateCourseCredits(myCourses, myGradesAfterReplace).originalCourseCredits;
-    var practiceCredits = Calculator.calculatePracticeCredits(myGradesAfterReplace).combinedCredits;
+DisplayWithPracticeNotAddedInCompletedCourse.prototype.calculate = function(myCourses, myGradesAfterReplace, gradeRules) {
+    var courseCredits = Calculator.calculateCourseCredits(myCourses, myGradesAfterReplace, gradeRules).originalCourseCredits;
+    var practiceCredits = Calculator.calculatePracticeCredits(myGradesAfterReplace, gradeRules).combinedCredits;
 
     var combinedCredits = this.parent.calculate(myGradesAfterReplace);
 
