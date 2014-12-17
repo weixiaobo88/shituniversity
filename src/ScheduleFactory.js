@@ -9,9 +9,10 @@ ScheduleFactory.prototype.create = function(replacementStrategy, displayStrategy
 
     var infoAfterReplace = this.getMyGradesAfterReplace(myCoursesBeforeReplace, replacementStrategy, gradeRules);
 
+    // TODO ? factory knows displayStrategy.calculate interface
     var result = displayStrategy.calculate(myCoursesBeforeReplace, infoAfterReplace);
 
-// TODO ?passing result as an object or passing each attribute
+    // TODO ?passing result as an object or passing each attribute
     var schedule = new Schedule(result.courseCredits, result.practiceCredits, result.achievedCredits, result.leftCredits, result.average);
 
     return schedule;
