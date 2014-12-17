@@ -2,7 +2,6 @@ var ReplacementStrategy = {
     sequencePriority: function(replaceablePractices, myCoursesBeforeReplace) {
 
     },
-
     scorePriority: function(replaceablePractices, myCoursesBeforeReplace) {
         var myCoursesAfterReplace = myCoursesBeforeReplace;
         var myReplacedCourses = [];
