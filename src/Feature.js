@@ -70,6 +70,19 @@ var Feature = {
         });
 
         return gradesWithPracticeDetailOfAllReplaceable;
+    },
+    calculatorCredits: function (courses) {
+        var credits = {
+            compulsory: 0,
+            elective: 0
+        };
+
+        courses.forEach(function (course) {
+            credits.compulsory += (course.type === CourseType.COMPULSORY ? course.credit : 0);
+            credits.elective += (course.type === CourseType.ELECTIVE ? course.credit : 0);
+        });
+
+        return credits;
     }
 };
 
