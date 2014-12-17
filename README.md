@@ -1,1 +1,1 @@
-# SHIT University 
+# South Harmon Institute of Technology
