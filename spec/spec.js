@@ -22,12 +22,14 @@ describe('South Harmon Institute of Technology University', function () {
 
         spyOn(console, 'log');
 
-        var legalFormattedGrades = Feature.transformData(grades);
-        var replacementStrategy = ReplacementStrategy.scorePriority;
+        var gradeRules = Feature;
+        var legalFormattedGrades = DataConverter.transformData(grades);
+
+        var replacementStrategy = new ReplaceWithScorePriority();
         var displayStrategy = new DisplayWithPracticeNotAddedInCompletedCourse();
 
         var schedule = new ScheduleFactory(legalFormattedGrades, allCourses, allPractices)
-                            .create(replacementStrategy, displayStrategy);
+                            .create(replacementStrategy, displayStrategy, gradeRules);
 
         schedule.render(Printer.consolePrinter);
 

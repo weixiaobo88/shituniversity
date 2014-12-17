@@ -4,13 +4,10 @@ function ScheduleFactory(grades, allCourses, allPractices) {
     this.allPractices =  allPractices;
 }
 
-ScheduleFactory.prototype.create = function(replacementStrategy, displayStrategy) {
-    var myCoursesBeforeReplace = Feature.getMyGradesOfCourse(this.grades, this.allCourses).myCourses;
+ScheduleFactory.prototype.create = function(replacementStrategy, displayStrategy, gradeRules) {
+    var myCoursesBeforeReplace = gradeRules.getMyGradesOfCourse(this.grades, this.allCourses).myCourses;
 
-// TODO ? duplicate with function generatePracticeCredits [resolved]
-//    var infoAfterReplace = this.generatePracticeCredits(this.grades, this.allPractices, this.allCourses, replacementStrategy);
-
-    var infoAfterReplace = this.generatePracticeCredits(this.grades, this.allPractices, myCoursesBeforeReplace, replacementStrategy);
+    var infoAfterReplace = this.getMyGradesAfterReplace(myCoursesBeforeReplace, replacementStrategy, gradeRules);
 
     var result = displayStrategy.calculate(myCoursesBeforeReplace, infoAfterReplace);
 
@@ -20,15 +17,15 @@ ScheduleFactory.prototype.create = function(replacementStrategy, displayStrategy
     return schedule;
 };
 
-ScheduleFactory.prototype.generatePracticeCredits = function (grades, allPractices, myCoursesBeforeReplace, replacementStrategy) {
-    var myPractices = Feature.extractMyPractices(grades, allPractices).myPractices;
+ScheduleFactory.prototype.getMyGradesAfterReplace = function (myCoursesBeforeReplace, replacementStrategy, gradeRules) {
 
-    var qualifiedPractices = Feature.qualifiedGrades(myPractices);
+    var myPractices = gradeRules.getMyGradesOfPractices(this.grades, this.allPractices).myPractices;
 
-    var replaceablePractices = Feature.removeUnreplaceablePractices(qualifiedPractices);
-//    var myCoursesBeforeReplace = Feature.getMyGradesOfCourse(grades, allCourses).myCourses;
+    var qualifiedPractices = gradeRules.qualifiedGrades(myPractices);
 
-    var infoAfterReplace = this.replace(replaceablePractices, myCoursesBeforeReplace, replacementStrategy);
+    var replaceablePractices = gradeRules.removeUnreplaceablePractices(qualifiedPractices);
+
+    var infoAfterReplace = replacementStrategy.replace(replaceablePractices, myCoursesBeforeReplace);
 
     return infoAfterReplace;
 };
