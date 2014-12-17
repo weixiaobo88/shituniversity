@@ -5,40 +5,38 @@ function ScheduleFactory(grades, allCourses, allPractices) {
 }
 
 ScheduleFactory.prototype.create = function(replacementStrategy, displayStrategy) {
-    var gradesWithCourseDetail = this.generateCourseCredits(this.grades, this.allCourses);
-    var infoAfterReplace = this.generatePracticeCredits(this.grades, this.allPractices, this.allCourses, replacementStrategy);
+    var myCoursesBeforeReplace = Feature.getMyGradesOfCourse(this.grades, this.allCourses).myCourses;
 
-    var result = displayStrategy(gradesWithCourseDetail, infoAfterReplace);
+// TODO ? duplicate with function generatePracticeCredits [resolved]
+//    var infoAfterReplace = this.generatePracticeCredits(this.grades, this.allPractices, this.allCourses, replacementStrategy);
 
+    var infoAfterReplace = this.generatePracticeCredits(this.grades, this.allPractices, myCoursesBeforeReplace, replacementStrategy);
+
+    var result = displayStrategy(myCoursesBeforeReplace, infoAfterReplace);
+
+// TODO ?passing result as an object or passing each attribute
     var schedule = new Schedule(result.courseCredits, result.practiceCredits, result.achievedCredits, result.leftCredits, result.average);
 
     return schedule;
 };
 
-ScheduleFactory.prototype.generateCourseCredits = function (grades, allCourses) {
-    var gradesWithCourseDetail = Feature.getMyGradesOfCourse(grades, allCourses).myCourses;
-
-    return gradesWithCourseDetail;
-};
-
-ScheduleFactory.prototype.generatePracticeCredits = function (grades, allPractices, allCourses, replacementStrategy) {
+ScheduleFactory.prototype.generatePracticeCredits = function (grades, allPractices, myCoursesBeforeReplace, replacementStrategy) {
     var myPractices = Feature.extractMyPractices(grades, allPractices).myPractices;
 
     var qualifiedPractices = Feature.qualifiedGrades(myPractices);
 
     var replaceablePractices = Feature.removeUnreplaceablePractices(qualifiedPractices);
+//    var myCoursesBeforeReplace = Feature.getMyGradesOfCourse(grades, allCourses).myCourses;
 
-    var myCourses = Feature.getMyGradesOfCourse(grades, allCourses).myCourses;
-
-    var infoAfterReplace = this.replace(replaceablePractices, myCourses, replacementStrategy);
+    var infoAfterReplace = this.replace(replaceablePractices, myCoursesBeforeReplace, replacementStrategy);
 
     return infoAfterReplace;
 };
 
-ScheduleFactory.prototype.replace = function (replaceablePractices, myCourses, replacementStrategy) {
-    var replacement = replacementStrategy(replaceablePractices, myCourses);
+ScheduleFactory.prototype.replace = function (replaceablePractices, myCoursesBeforeReplace, replacementStrategy) {
+    var replacement = replacementStrategy(replaceablePractices, myCoursesBeforeReplace);
 
-    var myCoursesAfterReplace = replacement.myCoursesAfterReplace;
+    var myCoursesAfterReplace = Object.create(replacement.myCoursesAfterReplace);
     var myReplacedCoursesByReplaceablePractices = replacement.myReplacedCoursesByReplaceablePractices;
     var practicesCantReplace = replacement.practicesCantReplace;
 
@@ -52,6 +50,8 @@ ScheduleFactory.prototype.replace = function (replaceablePractices, myCourses, r
     });
 
     return {
+//  TODO ?return  myCoursesBeforeReplace: myCoursesBeforeReplace,
+//  TODO then function displayStrategy instead of another parameter
         myCoursesAfterReplace: myCoursesAfterReplace,
         myReplacedCoursesByReplaceablePractices: myReplacedCoursesByReplaceablePractices,
         practicesCantReplace: practicesCantReplace,
