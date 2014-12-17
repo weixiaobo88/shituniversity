@@ -22,7 +22,7 @@ describe('South Harmon Institute of Technology University', function () {
 
         spyOn(console, 'log');
 
-        var gradeRules = Feature;
+        var gradeRules = GradeRules;
         var legalFormattedGrades = DataConverter.transformData(grades);
 
         var replacementStrategy = new ReplaceWithScorePriority();
