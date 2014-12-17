@@ -20,7 +20,7 @@ var Feature = {
             myCourses: myCourses
         }
     },
-    extractMyPractices: function(grades, allPractices) {
+    getMyGradesOfPractices: function(grades, allPractices) {
         var myPracticesScore = [];
         var myPractices = [];
 
@@ -61,7 +61,7 @@ var Feature = {
 
         return gradesWithPracticeDetailOfAllReplaceable;
     },
-    calculatorCredits: function (courses) {
+    calculateCredits: function (courses) {
         var credits = {
             compulsory: 0,
             elective: 0
