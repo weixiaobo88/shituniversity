@@ -31,29 +31,4 @@ ScheduleFactory.prototype.getMyGradesAfterReplace = function (myCoursesBeforeRep
     return infoAfterReplace;
 };
 
-ScheduleFactory.prototype.replace = function (replaceablePractices, myCoursesBeforeReplace, replacementStrategy) {
-    var replacement = replacementStrategy(replaceablePractices, myCoursesBeforeReplace);
-
-    var myCoursesAfterReplace = Object.create(replacement.myCoursesAfterReplace);
-    var myReplacedCoursesByReplaceablePractices = replacement.myReplacedCoursesByReplaceablePractices;
-    var practicesCantReplace = replacement.practicesCantReplace;
-
-    var myIncreasedCoursesByReplaceablePractices = [];
-
-    practicesCantReplace.forEach(function(practice) {
-        var newCourse = practice.replaceableCourses;
-        newCourse.score = practice.score;
-        myIncreasedCoursesByReplaceablePractices.push(newCourse);
-        myCoursesAfterReplace.push(newCourse);
-    });
-
-    return {
-//  TODO ?return  myCoursesBeforeReplace: myCoursesBeforeReplace,
-//  TODO then function displayStrategy instead of another parameter
-        myCoursesAfterReplace: myCoursesAfterReplace,
-        myReplacedCoursesByReplaceablePractices: myReplacedCoursesByReplaceablePractices,
-        practicesCantReplace: practicesCantReplace,
-        myIncreasedCoursesByReplaceablePractices: myIncreasedCoursesByReplaceablePractices
-    };
-};
 
