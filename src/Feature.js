@@ -1,5 +1,4 @@
 var Feature = {
-
     getMyGradesOfCourse: function(grades, allCourses) {
         var gradesOfCourseCode = [];
         var myCourses = [];
