@@ -12,7 +12,7 @@ ScheduleFactory.prototype.create = function(replacementStrategy, displayStrategy
 
     var infoAfterReplace = this.generatePracticeCredits(this.grades, this.allPractices, myCoursesBeforeReplace, replacementStrategy);
 
-    var result = displayStrategy(myCoursesBeforeReplace, infoAfterReplace);
+    var result = displayStrategy.calculate(myCoursesBeforeReplace, infoAfterReplace);
 
 // TODO ?passing result as an object or passing each attribute
     var schedule = new Schedule(result.courseCredits, result.practiceCredits, result.achievedCredits, result.leftCredits, result.average);

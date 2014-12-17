@@ -24,8 +24,7 @@ describe('South Harmon Institute of Technology University', function () {
 
         var legalFormattedGrades = Feature.transformData(grades);
         var replacementStrategy = ReplacementStrategy.scorePriority;
-        var displayStrategy = DisplayStrategy.practiceNotAddedInCompletedCourse;
-//        var displayStrategy = DisplayStrategy.practiceTransformedToCourse;
+        var displayStrategy = new DisplayWithPracticeNotAddedInCompletedCourse();
 
         var schedule = new ScheduleFactory(legalFormattedGrades, allCourses, allPractices)
                             .create(replacementStrategy, displayStrategy);
