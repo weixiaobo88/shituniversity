@@ -53,7 +53,7 @@ Then 显示
     practiceNotAddedInCompletedCourse: function(myCourses, myGradesAfterReplace) {
         var courseCredits = Calculator.calculateCourseCredits(myCourses, myGradesAfterReplace).originalCourseCredits;
         var practiceCredits = Calculator.calculatePracticeCredits(myGradesAfterReplace).combinedCredits;
-
+// TODO duplicate with other function practiceTransformedToCourse
         var achievedCredits =  Calculator.calculateAchievedCredits(myGradesAfterReplace);
         var leftCredits = Calculator.calculateLeftCredits(achievedCredits);
         var average = Calculator.calculateAverage(myGradesAfterReplace);
