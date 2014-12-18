@@ -20,7 +20,7 @@ ScheduleFactory.prototype.create = function(replacementStrategy, displayStrategy
 
 ScheduleFactory.prototype.getMyGradesAfterReplace = function (myCoursesBeforeReplace, replacementStrategy, gradeRules) {
 
-    var myPractices = gradeRules.getMyGradesOfPractices(this.grades, this.allPractices).myPractices;
+    var myPractices = gradeRules.getMyGradesOfPractices(this.grades, this.allPractices);
 
     var qualifiedPractices = gradeRules.qualifiedGrades(myPractices);
 
