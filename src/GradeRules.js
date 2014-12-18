@@ -45,7 +45,7 @@ GradeRules.prototype.qualifiedGrades = function (grades) {
 };
 
 GradeRules.prototype.removeUnreplaceablePractices = function (gradesWithPracticeDetail) {
-    var gradesWithPracticeDetailOfAllReplaceable = gradesWithPracticeDetail;
+    var gradesWithPracticeDetailOfAllReplaceable = Object.create(gradesWithPracticeDetail);
 
     gradesWithPracticeDetailOfAllReplaceable.forEach(function (grade, index) {
         if (!grade.replaceableCourses) {

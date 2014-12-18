@@ -34,12 +34,12 @@ var Calculator = {
         }
     },
     calculateAchievedCredits: function (myGradesAfterReplace) {
-        var myCoursesAfterReplace = myGradesAfterReplace.myCoursesAfterReplace;
+        var myCoursesAfterReplaceAndIncrease = myGradesAfterReplace.myCoursesAfterReplaceAndIncrease;
 
         var compulsory = 0;
         var elective = 0;
 
-        myCoursesAfterReplace.forEach(function (course) {
+        myCoursesAfterReplaceAndIncrease.forEach(function (course) {
             compulsory += (course.type === CourseType.COMPULSORY ? course.credit : 0);
             elective += (course.type === CourseType.ELECTIVE ? course.credit : 0);
         });
@@ -56,7 +56,7 @@ var Calculator = {
         };
     },
     calculateAverage: function (myGradesAfterReplace) {
-        var myCoursesAfterReplace = myGradesAfterReplace.myCoursesAfterReplace;
+        var myCoursesAfterReplace = myGradesAfterReplace.myCoursesAfterReplaceAndIncrease;
         var sum = 0;
 
         var length = myCoursesAfterReplace.length;
