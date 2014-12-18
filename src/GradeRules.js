@@ -2,24 +2,19 @@ function GradeRules() {
 }
 
 GradeRules.prototype.getMyGradesOfCourse = function (grades, allCourses) {
-    var gradesOfCourseCode = [];
     var myCourses = [];
 
     grades.forEach(function (grade) {
         allCourses.forEach(function (course) {
             if (course.code === grade.course) {
-                gradesOfCourseCode.push(grade);
-                var newCourse = course;
+                var newCourse = Object.create(course);
                 newCourse.score = grade.score;
                 myCourses.push(newCourse);
             }
         })
     });
 
-    return {
-        gradesOfCourseCode: gradesOfCourseCode,
-        myCourses: myCourses
-    }
+    return myCourses;
 };
 
 GradeRules.prototype.getMyGradesOfPractices = function (grades, allPractices) {

@@ -5,7 +5,7 @@ function ScheduleFactory(grades, allCourses, allPractices) {
 }
 
 ScheduleFactory.prototype.create = function(replacementStrategy, displayStrategy, gradeRules) {
-    var myCoursesBeforeReplace = gradeRules.getMyGradesOfCourse(this.grades, this.allCourses).myCourses;
+    var myCoursesBeforeReplace = gradeRules.getMyGradesOfCourse(this.grades, this.allCourses);
 
     var infoAfterReplace = this.getMyGradesAfterReplace(myCoursesBeforeReplace, replacementStrategy, gradeRules);
 
